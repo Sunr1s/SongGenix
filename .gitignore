@@ -3,6 +3,8 @@
 # dependencies
 client/node_modules
 
+.idea
+
 # production
 client/build
 
