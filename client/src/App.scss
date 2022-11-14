@@ -60,3 +60,57 @@ body{
 
     }
 }
+/*===============================
+===============================
+===============================
+===============================*/
+
+.nickname-white-oval{
+    opacity: 70%;
+    font-weight: 500;
+    font-family: 'neue';
+    text-align: center;
+    min-width: 850px;
+    min-height: 350px;
+    border-radius: 80px;
+    background-color: #ffff;
+    padding: 25px 60px;
+
+
+    .nickname-white-oval-text{
+        position: relative;
+        left: -220px;
+        font-size: 55px;
+        margin-top: 15px;
+        margin-bottom: 30px;
+    }
+    .nickname-white-oval-input{
+        font-size: 30px;
+        min-width: 680px;
+        min-height: 66px;
+        width: max-content;
+        border-radius: 35px;
+        margin-bottom: 50px;
+    }
+
+    .nickname-white-oval-btn{
+        border-radius: 65px;
+        margin: 0 auto;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 25px;
+        background-color: #C2A9CF;
+        font-size: 30px;   
+        max-width: 280px;
+        max-height: 60px;
+        font-weight: 700;
+        transition-duration: 0.5s;
+    }
+    .nickname-white-oval-btn:hover{
+        cursor: pointer;
+        background-color: rgb(224, 197, 238);
+    }
+}
+
