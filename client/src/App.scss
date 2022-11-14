@@ -1,0 +1,62 @@
+
+body{
+    background-color: #E88A88;
+    background-image: url(../public/background-question-page1.png);
+    background-repeat:  no-repeat;
+    background-position: center center;
+    background-size: 101%;
+}
+
+.App{
+    position: relative;
+    top: 150px;
+    display: flex;
+    justify-content: center;
+
+    .white-oval{
+        opacity: 70%;
+        font-weight: 700;
+        font-family: 'neue';
+        line-height: 55px;
+        text-align: center;
+        max-width: 850px;
+        font-size: 65px;
+        border-radius: 80px;
+        background-color: #ffff;
+        padding: 25px 60px;
+    }
+
+
+    .buttons{
+        cursor: pointer;
+        margin-top: 80px;
+        display: flex;
+        gap: 100px;
+        justify-content: center;
+        font-size: 40px;
+        font-family: 'neue';
+        font-weight: 700;
+
+
+        .create-room-btn{
+            border-radius: 80px;
+            padding: 10px 20px 10px 20px;
+            background-color: #9A6CA7;
+            transition-duration: 0.5s;
+        }
+        .create-room-btn:hover{
+            background-color: #c185d3;
+        }
+        .connect-btn{
+            border-radius: 80px;
+            padding: 10px 60px 10px 60px;
+            background-color: #BB7FA8;
+            transition-duration: 0.5s;
+        }
+        .connect-btn:hover{
+            background-color: #e19bc9;
+        }
+
+
+    }
+}

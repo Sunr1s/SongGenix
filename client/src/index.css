@@ -57,3 +57,10 @@ textarea,
 select {
   font: inherit;
 }
+
+@font-face {
+  font-family: 'neue';
+  src:  url('../public/fonts/NeueMachina-Light.otf'),
+        url('../public/fonts//NeueMachina-Regular.otf'),
+        url('../public/fonts/NeueMachina-Ultrabold.otf');
+}
