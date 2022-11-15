@@ -66,18 +66,18 @@ body{
 ===============================*/
 
 .nickname-white-oval{
-    opacity: 70%;
     font-weight: 500;
     font-family: 'neue';
     text-align: center;
     min-width: 850px;
     min-height: 350px;
     border-radius: 80px;
-    background-color: #ffff;
+    background-color: rgba(253, 250, 250, 0.6);
     padding: 25px 60px;
 
 
     .nickname-white-oval-text{
+        opacity: 0.99;
         position: relative;
         left: -220px;
         font-size: 55px;
@@ -85,15 +85,20 @@ body{
         margin-bottom: 30px;
     }
     .nickname-white-oval-input{
+        opacity: 1;
+        padding: 0 1rem;
         font-size: 30px;
         min-width: 680px;
         min-height: 66px;
         width: max-content;
         border-radius: 35px;
         margin-bottom: 50px;
+        background: transparent;
+        border: 1px solid;
     }
 
     .nickname-white-oval-btn{
+        opacity: 1;
         border-radius: 65px;
         margin: 0 auto;
         display: flex;
@@ -101,16 +106,18 @@ body{
         justify-content: center;
         align-items: center;
         padding: 12px 25px;
-        background-color: #C2A9CF;
+        background-image: linear-gradient(60deg, #bf9fc9 , #c5afc9 );
+        color: #000000;
         font-size: 30px;   
         max-width: 280px;
         max-height: 60px;
         font-weight: 700;
-        transition-duration: 0.5s;
+        animation: gradient 10s;
     }
     .nickname-white-oval-btn:hover{
         cursor: pointer;
-        background-color: rgb(224, 197, 238);
+        background-image: linear-gradient(60deg, #ac89b7 , #bc9ac2 );
+
     }
 }
 
