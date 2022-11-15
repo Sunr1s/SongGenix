@@ -2,7 +2,6 @@
 
 # dependencies
 client/node_modules
-server\__pycache__
 
 .idea
 
