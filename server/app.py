@@ -1,15 +1,24 @@
+import spotipy
 from bson.objectid import ObjectId
 from urllib import request
 from pymongo import MongoClient
-from flask import Flask, make_response, request
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from flask import Flask, make_response, request, session
+from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
+from sp_loggin import get_token, create_spotify_oauth
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
 db = client.SongGenix
 
-@app.route('/createLobby', methods=["POST"])
+app.secret_key = 'SOMETHING-RANDOM'
+app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
+
+"""Lobby creating
+Returns:
+    json: room, 200
+"""
+
+@app.route('/createRoom', methods=["POST"])
 def createLobby():
     if len(request.json['username']) > 2:
         lobby = {
@@ -21,10 +30,24 @@ def createLobby():
         lobby["_id"] = str(post_id)
     return make_response(lobby, 200)
 
+"""deleting room
+Recive:
+    str: room id
+Returns:
+    json: result code
+"""
+
 @app.route('/deleteRoom/<id>', methods=['DELETE'])
 def deleteRoom(id):
     result = db.Lobby.delete_one({'_id': ObjectId(id)})
     return make_response(result, 200)
+
+"""updating room
+Recive:
+    str: room id
+Returns:
+    json: ok
+"""
 
 @app.route('/updateRoom/<id>', methods=['PUT'])
 def updateRoom(id):
@@ -39,22 +62,77 @@ def updateRoom(id):
     db.Lobby.update_one(filter, settings)
     return make_response("ok", 200)
 
-@app.route('/')
-def one():
-    get_playlist()
-    return "hey"
+"""get top autor traks
+Recive:
+    str: autor name
+    int: count traks to parse
+Returns:
+    json: traks, 200
+    error: 'No such autor', 400
+"""
 
-def get_playlist():
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="62cac1f286d94cf08b9cb1c29ab09f67",
-                                                            client_secret="a9718725dd8142cea7e7dbea4fdeae4d"),
-                                                            redirect_uri="http://127.0.0.1:5000/",
-                                                            scope="user-library-read")
+@app.route('/getbyautor/<name>/<int:trakscount>', methods=["POST"])
+def get_byautor(name,trakscount):
+    sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id="62cac1f286d94cf08b9cb1c29ab09f67",
+                                                            client_secret="a9718725dd8142cea7e7dbea4fdeae4d"))
+    autor = []
+    results = sp.search(q='artist:' + name, type='artist')
+    items = results['artists']['items']
+    if len(items) > 0:
+        artist = items[0]
+        results = sp.artist_top_tracks(artist["uri"])
+        for track in results['tracks'][:trakscount]:
+            autor.append({
+                "track": track['name'],
+                'audio': track['preview_url'],
+                'cover art': track['album']['images'][0]['url']
+            })
 
-    results = sp.search(q='weezer', limit=20)
+        print(type(autor))
+        return make_response(autor, 200)
+    else:
+        return make_response('No such autor', '400')
+
+"""Spotify loggin
+Returns:
+    json: logged, 200
+"""
+
+@app.route('/loginSpotify', methods=['GET'])
+def loginSpotify():
+    sp_oauth = create_spotify_oauth()
+    session.clear()
+    code = request.args.get('code')
+    token_info = sp_oauth.get_access_token(code)
+    session["token_info"] = token_info
+    return make_response("logged", 200)
+
+"""Get users playlist
+Recive:
+    str: playlistname
+Returns:
+    json: traks, 200
+    error: 'Unauthorized', 401
+"""
+
+@app.route('/getbyplaylist/<playlistname>', methods=['GET'])
+def getbyplaylist(playlistname):
+    traks = []
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return make_response('Unauthorized', '401')
+
+    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+
     results = sp.current_user_playlists(limit=50)
-    for i, item in enumerate(results['items']):
-        print("%d %s" % (i, item['name']))
+    for item in results['items']:
+        if str(item['name']) == playlistname:
+            traks.append(sp.playlist(item['uri'])['tracks']['items'])
     
+    return make_response(traks, '200')
+    
+
 if __name__ == "__main__":
     app.run()
     
