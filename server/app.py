@@ -5,8 +5,10 @@ from pymongo import MongoClient
 from flask import Flask, make_response, request, session
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from sp_loggin import get_token, create_spotify_oauth
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 client = MongoClient('localhost', 27017)
 db = client.SongGenix
 
@@ -20,15 +22,19 @@ Returns:
 
 @app.route('/createRoom', methods=["POST"])
 def createLobby():
-    if len(request.json['username']) > 2:
-        lobby = {
-            "admin": request.json['username'],
-            "users": [],
-            "settings": {}
-        }
-        post_id = db.Lobby.insert_one(lobby).inserted_id
-        lobby["_id"] = str(post_id)
-    return make_response(lobby, 200)
+    try:
+        if len(request.json['username']) > 2:
+            lobby = {
+                "admin": request.json['username'],
+                "users": [],
+                "settings": {}
+            }
+            post_id = db.Lobby.insert_one(lobby).inserted_id
+            lobby["_id"] = str(post_id)
+            return make_response(lobby, 200)
+        return make_response({ "msg": "Invalid data" }, 400)
+    except:
+        return make_response({ "msg": "Server error" }, 500)
 
 """deleting room
 Recive:
