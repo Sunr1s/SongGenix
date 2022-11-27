@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const user = new Schema({
     name: { type: String },
-    totalPoints: { type: Number }
+    totalPoints: { type: Number, default: 0 }
 });
 
 const settings = new Schema({
