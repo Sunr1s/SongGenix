@@ -129,6 +129,17 @@ body {
             font-weight: 700;
             animation: gradient 10s;
         }
+<<<<<<< HEAD
+
+        .nickname-white-oval-btn:hover {
+            cursor: pointer;
+            background-image: linear-gradient(60deg, #ac89b7, #bc9ac2);
+
+        }
+    }
+}
+=======
+>>>>>>> bf211303188beb5bc308510e4cfd32ae7ed8496b
 
         .nickname-white-oval-btn:hover {
             cursor: pointer;
@@ -138,12 +149,12 @@ body {
     }
 }
 
-
 /*===============================
 ===============================
 ===============================
 ===============================*/
 .room {
+<<<<<<< HEAD
 
     display: flex;
     justify-content: space-between;
@@ -250,6 +261,14 @@ body {
             flex-direction: column;
             align-items: center;
             gap: 30px;
+=======
+    display: flex;
+    background-color: red;
+
+    .left-column-room{
+        p {
+        font-size: 20px;
+>>>>>>> bf211303188beb5bc308510e4cfd32ae7ed8496b
         }
 
         .quantity-tracks-row{
@@ -268,4 +287,10 @@ body {
         }
     }
 
+<<<<<<< HEAD
+=======
+    .right-column-room{
+        max-width: 350px;
+    }
+>>>>>>> bf211303188beb5bc308510e4cfd32ae7ed8496b
 }

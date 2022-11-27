@@ -1,5 +1,5 @@
-import spotipy
-from bson.objectid import ObjectId
+import spotipy, json
+from bson import ObjectId, json_util
 from urllib import request
 from pymongo import MongoClient
 from flask import Flask, make_response, request, session
@@ -15,7 +15,7 @@ db = client.SongGenix
 app.secret_key = 'SOMETHING-RANDOM'
 app.config['SESSION_COOKIE_NAME'] = 'spotify-login-session'
 
-"""Lobby creating
+"""lobby creating
 Returns:
     json: room, 200
 """
@@ -32,9 +32,24 @@ def createLobby():
             post_id = db.Lobby.insert_one(lobby).inserted_id
             lobby["_id"] = str(post_id)
             return make_response(lobby, 200)
-        return make_response({ "msg": "Invalid data" }, 400)
+        return make_response({ 'msg': 'Invalid data' }, 400)
     except:
-        return make_response({ "msg": "Server error" }, 500)
+        return make_response({ 'msg': 'Server error' }, 500)
+
+"""reading room
+Recive:
+    str: room id
+Return:
+    json: room
+"""
+
+@app.route('/readRoom/<room_id>', methods=["GET"])
+def readRoom(room_id):
+    try:
+        room = db.Lobby.find_one({'_id':ObjectId(room_id)})
+        return make_response(json.loads(json_util.dumps(room)), 200)
+    except:
+        return make_response('room not found', 404)
 
 """deleting room
 Recive:
@@ -77,7 +92,7 @@ Returns:
     error: 'No such autor', 400
 """
 
-@app.route('/getbyautor/<name>/<int:trakscount>', methods=["POST"])
+@app.route('/getbyautor/<name>/<int:trakscount>', methods=["GET"])
 def get_byautor(name,trakscount):
     sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id="62cac1f286d94cf08b9cb1c29ab09f67",
                                                             client_secret="a9718725dd8142cea7e7dbea4fdeae4d"))
@@ -117,7 +132,7 @@ def loginSpotify():
 Recive:
     str: playlistname
 Returns:
-    json: traks, 200
+    sting: ok, 200
     error: 'Unauthorized', 401
 """
 
@@ -136,7 +151,11 @@ def getbyplaylist(playlistname):
         if str(item['name']) == playlistname:
             traks.append(sp.playlist(item['uri'])['tracks']['items'])
     
-    return make_response(traks, '200')
+    db.Lobby.find_one_and_update(
+        {"_id":ObjectId(request.json['id'])},
+        {'$set': {"playlist":traks}})
+
+    return make_response('tracks written', '200')
     
 
 if __name__ == "__main__":
