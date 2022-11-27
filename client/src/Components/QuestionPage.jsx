@@ -28,7 +28,7 @@ const QuestionPage = ({ userName, setRoomData }) => {
     return (
         <div>
             <div className="App">
-                <div>
+                <div className='question'>
                     <div className="white-oval">Готові перевірити свої музичні знання?</div>
                     <div className='buttons'>
                         <div className='create-room-btn btn' onClick={onCreateRoom}>Створити кімнату</div>
