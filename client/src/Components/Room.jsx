@@ -9,7 +9,7 @@ const Room = () => {
                 <div className="room">
 
                     <div className="left-column-room">
-                        <p className="">Учасники</p>
+                        <p>Учасники</p>
                     </div>
 
                     <div className="center-column-room">

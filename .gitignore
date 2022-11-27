@@ -2,7 +2,8 @@
 
 # dependencies
 client/node_modules
-server\__pycache__
+server/__pycache__
+game-server/node_modules
 
 .idea
 
