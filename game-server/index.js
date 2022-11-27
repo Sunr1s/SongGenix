@@ -68,6 +68,7 @@ const game = async (roomId, userId) => {
             const randomSongs = _getArrayOfRandomSongs(songs);
             const roundObject = {
                 event: "startRound",
+                round: i,
                 songs: randomSongs,
                 songPlayingTime: roundTime,
             };
