@@ -8,7 +8,6 @@ const Room = () => {
             <div className='App'>
                 <div className="room">
 
-<<<<<<< HEAD
                     <div className="left-column-room column-room">
                         <p className="title-room">Учасники</p>
                         <div className="cards">
@@ -29,10 +28,6 @@ const Room = () => {
                             </div>
                         </div>
 
-=======
-                    <div className="left-column-room">
-                        <p>Учасники</p>
->>>>>>> bf211303188beb5bc308510e4cfd32ae7ed8496b
                     </div>
 
                     <div className="center-column-room">
@@ -45,7 +40,7 @@ const Room = () => {
                         <p className="title-room">Налаштування</p>
                         <div className="room-options">
                             <div className="room-line"></div>
-                            <p className="room-options-title">Кількість треків</p>
+                            <p className="">Кількість треків</p>
                             <div className="roop-options-quantity-tracks">
                                 <div className='quantity-tracks-row'>
                                     <p>5</p>
