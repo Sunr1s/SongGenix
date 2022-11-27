@@ -1,61 +1,66 @@
-
 body{
-    background-color: #E88A88;
     background-image: url(../public/background-question-page1.png);
-    background-repeat:  no-repeat;
+    background-image: url(../public/back-2.png);
     background-position: center center;
+    background-repeat: no-repeat;
     background-size: cover;
 }
 
 .App{
-    position: relative;
-    top: 150px;
-    display: flex;
-    justify-content: center;
-
-    .white-oval{
-        opacity: 70%;
-        font-weight: 700;
-        font-family: 'neue';
-        line-height: 55px;
-        text-align: center;
-        max-width: 850px;
-        font-size: 65px;
-        border-radius: 80px;
-        background-color: #ffff;
-        padding: 25px 60px;
-    }
-
-
-    .buttons{
-        cursor: pointer;
-        margin-top: 80px;
+    
+    .question{
+        position: relative;
+        top: 150px;
         display: flex;
-        gap: 100px;
+        flex-direction: column;
         justify-content: center;
-        font-size: 40px;
-        font-family: 'neue';
-        font-weight: 700;
-
-
-        .create-room-btn{
+    
+        .white-oval{
+            margin: 0 auto;
+            opacity: 70%;
+            font-weight: 700;
+            font-family: 'neue';
+            line-height: 55px;
+            text-align: center;
+            max-width: 850px;
+            font-size: 65px;
             border-radius: 80px;
-            padding: 10px 20px 10px 20px;
-            background-color: #9A6CA7;
-            transition-duration: 0.5s;
+            background-color: #ffff;
+            padding: 25px 60px;
         }
-        .create-room-btn:hover{
-            background-color: #c185d3;
-        }
-        .connect-btn{
-            border-radius: 80px;
-            padding: 10px 60px 10px 60px;
-            background-color: #BB7FA8;
-            transition-duration: 0.5s;
-        }
-        .connect-btn:hover{
-            background-color: #e19bc9;
-        }
+    
+    
+        .buttons{
+            cursor: pointer;
+            margin-top: 80px;
+            display: flex;
+            gap: 100px;
+            justify-content: center;
+            font-size: 40px;
+            font-family: 'neue';
+            font-weight: 700;
+    
+    
+            .create-room-btn{
+                border-radius: 80px;
+                padding: 10px 20px 10px 20px;
+                background-color: #9A6CA7;
+                transition-duration: 0.5s;
+            }
+            .create-room-btn:hover{
+                background-color: #c185d3;
+            }
+            .connect-btn{
+                border-radius: 80px;
+                padding: 10px 60px 10px 60px;
+                background-color: #BB7FA8;
+                transition-duration: 0.5s;
+            }
+            .connect-btn:hover{
+                background-color: #e19bc9;
+            }
+    
+    }
 
 
     }
@@ -64,60 +69,87 @@ body{
 ===============================
 ===============================
 ===============================*/
+.EnterNick{
+    position: relative;
+    top: 150px;
+    display: flex;
+    justify-content: center;
 
-.nickname-white-oval{
-    font-weight: 500;
-    font-family: 'neue';
-    text-align: center;
-    min-width: 850px;
-    min-height: 350px;
-    border-radius: 80px;
-    background-color: rgba(253, 250, 250, 0.6);
-    padding: 25px 60px;
-
-
-    .nickname-white-oval-text{
-        opacity: 0.99;
-        position: relative;
-        left: -220px;
-        font-size: 55px;
-        margin-top: 15px;
-        margin-bottom: 30px;
-    }
-    .nickname-white-oval-input{
-        opacity: 1;
-        padding: 0 1rem;
-        font-size: 30px;
-        min-width: 680px;
-        min-height: 66px;
-        width: max-content;
-        border-radius: 35px;
-        margin-bottom: 50px;
-        background: transparent;
-        border: 1px solid;
-    }
-
-    .nickname-white-oval-btn{
-        opacity: 1;
-        border-radius: 65px;
-        margin: 0 auto;
-        display: flex;
+    .nickname-white-oval{
+        font-weight: 500;
+        font-family: 'neue';
         text-align: center;
-        justify-content: center;
-        align-items: center;
-        padding: 12px 25px;
-        background-image: linear-gradient(60deg, #bf9fc9 , #c5afc9 );
-        color: #000000;
-        font-size: 30px;   
-        max-width: 280px;
-        max-height: 60px;
-        font-weight: 700;
-        animation: gradient 10s;
-    }
-    .nickname-white-oval-btn:hover{
-        cursor: pointer;
-        background-image: linear-gradient(60deg, #ac89b7 , #bc9ac2 );
+        min-width: 850px;
+        min-height: 350px;
+        border-radius: 80px;
+        background-color: rgba(253, 250, 250, 0.6);
+        padding: 25px 60px;
+    
+    
+        .nickname-white-oval-text{
+            opacity: 0.99;
+            position: relative;
+            left: -220px;
+            font-size: 55px;
+            margin-top: 15px;
+            margin-bottom: 30px;
+        }
+        .nickname-white-oval-input{
+            opacity: 1;
+            padding: 0 1rem;
+            font-size: 30px;
+            min-width: 680px;
+            min-height: 66px;
+            width: max-content;
+            border-radius: 35px;
+            margin-bottom: 50px;
+            background: transparent;
+            border: 1px solid;
+        }
+    
+        .nickname-white-oval-btn{
+            opacity: 1;
+            border-radius: 65px;
+            margin: 0 auto;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 25px;
+            background-image: linear-gradient(60deg, #bf9fc9 , #c5afc9 );
+            color: #000000;
+            font-size: 30px;   
+            max-width: 280px;
+            max-height: 60px;
+            font-weight: 700;
+            animation: gradient 10s;
+        }
+        .nickname-white-oval-btn:hover{
+            cursor: pointer;
+            background-image: linear-gradient(60deg, #ac89b7 , #bc9ac2 );
+    
+        }
+}
 
+
+/*===============================
+===============================
+===============================
+===============================*/
+.room{
+    display: flex;
+
+
+    .left-column-room{
+        p{
+        font-size: 20px;
+        }
+
+    }
+
+    .right-column-room{
+        max-width: 350px;
     }
 }
 
+}
