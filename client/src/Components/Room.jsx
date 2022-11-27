@@ -40,20 +40,11 @@ const Room = () => {
                         <p className="title-room">Налаштування</p>
                         <div className="room-options">
                             <div className="room-line"></div>
-                            <p className="">Кількість треків</p>
+                            <p className="room-options-title">Кількість треків</p>
                             <div className="roop-options-quantity-tracks">
-                                <div className='quantity-tracks-row'>
-                                    <p>5</p>
-                                    <p>10</p>
-                                    <p>15</p>
-                                </div>
-
-                                <div className='quantity-tracks-row'>
-                                    <p>25</p>
-                                    <p>30</p>
-                                    <p>50</p>
-                                </div>
-
+                                <p>5</p>
+                                <p>10</p>
+                                <p>15</p>
                             </div>
                         </div>
                     </div>

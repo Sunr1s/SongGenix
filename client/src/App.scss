@@ -234,7 +234,7 @@ body {
     .right-column-room {
 
         .room-line {
-            width: 200px;
+            width: 170px;
             height: 2px;
             background-color: #000000;
         }
@@ -256,7 +256,6 @@ body {
             font-family: 'neue';
             font-size: 25px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             gap: 30px;
             display: flex;
@@ -264,12 +263,7 @@ body {
             display: flex;
             gap: 25px;
         }
-        .quantity-tracks-row{
-            gap: 20px;
-            display: flex;
-        }
-
-        .quantity-tracks-row p:hover {
+        .roop-options-quantity-tracks p:hover {
             font-weight: 800;
             cursor: pointer;
             padding: 1px 6px;
