@@ -71,6 +71,7 @@ const game = async (roomId, userId) => {
                 round: i,
                 songs: randomSongs,
                 songPlayingTime: roundTime,
+                users: room.users
             };
             broadcast(roundObject, roomId);
             await _delay(roundTime * 1000);
@@ -81,7 +82,14 @@ const game = async (roomId, userId) => {
                 const earnedPoints = user.totalPoints - oldUserResults.totalPoints;
                 return { ...user, earnedPoints };
             }).sort((a, b) => a.totalPoints - b.totalPoints);
-            broadcast(playerResults, roomId);
+            const endRoundObject = {
+                event: "endRound",
+                round: i,
+                songs: randomSongs,
+                songPlayingTime: roundTime,
+                users: playerResults
+            };
+            broadcast(endRoundObject, roomId);
         }
     } catch (e) {
         console.log(e);
@@ -151,4 +159,4 @@ const broadcast = (data, roomId) => {
     });
 };
 
-server.listen(6000, () => console.log("Server started"));
+server.listen(4200, () => console.log("Server started"));

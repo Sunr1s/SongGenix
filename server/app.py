@@ -47,6 +47,11 @@ def createLobby():
 def readRoom(room_id):
     try:
         room = db.Lobby.find_one({'_id':ObjectId(room_id)})
+        room["_id"] = str(room["_id"])
+        def apply(user):
+            user["_id"] = str(user["_id"])
+            return user
+        room["users"] = map(apply, room["users"])
         return make_response(json.loads(json_util.dumps(room)), 200)
     except:
         return make_response('room not found', 404)

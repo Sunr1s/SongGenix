@@ -1,8 +1,10 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 
-const QuestionPage = ({ userName, setRoomData }) => {
+const QuestionPage = ({ socket, userName, setRoomData }) => {
     const navigate = useNavigate();
+    const [isConnect, setIsConnect] = React.useState(false);
+    const [roomId, setRoomId] = React.useState("");
 
     const onCreateRoom = async () => {
         const response = await fetch('http://127.0.0.1:5000/createRoom', {
@@ -21,7 +23,38 @@ const QuestionPage = ({ userName, setRoomData }) => {
         if (response.ok) {
             const room = await response.json();
             setRoomData(room);
+            socket.send(JSON.stringify({
+                roomId,
+                name: userName,
+                event: "setClient"
+            }));
             navigate('/room');
+        }
+    }
+
+    const onConnectRoom = async () => {
+        setIsConnect(!isConnect);
+        if (roomId.length) {
+            const response = await fetch(`http://127.0.0.1:5000/readRoom/${roomId}`, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "*/*",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Connection": "keep-alive"
+                },
+            });
+            if (response.ok) {
+                const room = await response.json();
+                setRoomData(room);
+                socket.send(JSON.stringify({
+                    roomId,
+                    name: userName,
+                    event: "setClient"
+                }));
+                navigate('/room');
+            }
         }
     }
 
@@ -31,8 +64,16 @@ const QuestionPage = ({ userName, setRoomData }) => {
                 <div className='question'>
                     <div className="white-oval">Готові перевірити свої музичні знання?</div>
                     <div className='buttons'>
-                        <div className='create-room-btn btn' onClick={onCreateRoom}>Створити кімнату</div>
-                        <div className='connect-btn btn'>Приєднатись</div>
+                        { !isConnect
+                            ? <div className='create-room-btn btn' onClick={onCreateRoom}>Створити кімнату</div>
+                            : <input
+                                placeholder="Введіть id кімнати"
+                                className="input"
+                                value={roomId}
+                                onChange={(e) => setRoomId(e.target.value)}
+                              />
+                        }
+                        <div className='connect-btn btn' onClick={onConnectRoom}>Приєднатись</div>
                     </div>
                 </div>
             </div>

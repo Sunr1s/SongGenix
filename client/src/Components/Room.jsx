@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../App.scss';
 
-const Room = () => {
+const Room = ({ roomData, socketData }) => {
+    const [songsNumber, setSongsNumber] = useState(5);
+    const [songsPlayingTime, setSongsPlayingTime] = useState(5);
 
     return (
         <div>
@@ -11,21 +13,19 @@ const Room = () => {
                     <div className="left-column-room column-room">
                         <p className="title-room">Учасники</p>
                         <div className="cards">
-                            <div className='person-card'>
-                                <p className="person-card-place">1.</p>
-                                <p className="person-card-name">Alex Kiri -</p>
-                                <p className="person-card-points">333</p>
-                            </div>
-                            <div className='person-card'>
-                                <p className="person-card-place">2.</p>
-                                <p className="person-card-name">Vova -</p>
-                                <p className="person-card-points">313</p>
-                            </div>
-                            <div className='person-card'>
-                                <p className="person-card-place">3.</p>
-                                <p className="person-card-name">SunR1se -</p>
-                                <p className="person-card-points">299</p>
-                            </div>
+                            {
+                                roomData.users.map((user, index) => {
+                                   const userSocketData = socketData && socketData.users.find((su) => su.name === user.name);
+                                   return (
+                                       <div className='person-card'>
+                                           <p className="person-card-place">{index + 1}</p>
+                                           <p className="person-card-name">{user.name}</p>
+                                           <p className="person-card-points">{userSocketData && userSocketData.totalPoints || 0}</p>
+                                           {userSocketData && userSocketData.earnedPoints && <p className="person-card-points">(+{userSocketData.earnedPoints})</p>}
+                                       </div>
+                                   );
+                                })
+                            }
                         </div>
 
                     </div>
@@ -62,9 +62,9 @@ const Room = () => {
                             <div className="room-line"></div>
                             <p className="room-options-title">Кількість треків</p>
                             <div className="roop-options-quantity-tracks">
-                                <p>5</p>
-                                <p>10</p>
-                                <p>15</p>
+                                <p onClick={() => setSongsNumber(5)}>5</p>
+                                <p onClick={() => setSongsNumber(10)}>10</p>
+                                <p onClick={() => setSongsNumber(15)}>15</p>
                             </div>
                         </div>
 
@@ -72,9 +72,9 @@ const Room = () => {
                             <div className="room-line"></div>
                             <p className="room-options-title">Тривалість треків</p>
                             <div className="roop-options-duration-tracks">
-                                <p>5</p>
-                                <p>10</p>
-                                <p>15</p>
+                                <p onClick={() => setSongsPlayingTime(5)}>5</p>
+                                <p onClick={() => setSongsPlayingTime(10)}>10</p>
+                                <p onClick={() => setSongsPlayingTime(15)}>15</p>
                             </div>
                         </div>
                     </div>
