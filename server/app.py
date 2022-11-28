@@ -2,7 +2,7 @@ import spotipy, json
 from bson import ObjectId, json_util
 from urllib import request
 from pymongo import MongoClient
-from flask import Flask, make_response, request, session
+from flask import Flask, make_response, request, session, redirect
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from sp_loggin import get_token, create_spotify_oauth
 from flask_cors import CORS
@@ -36,12 +36,12 @@ def createLobby():
     except:
         return make_response({ 'msg': 'Server error' }, 500)
 
-"""reading room
-Recive:
-    str: room id
-Return:
-    json: room
-"""
+    """reading room
+    Recive:
+        str: room id
+    Return:
+        json: room
+    """
 
 @app.route('/readRoom/<room_id>', methods=["GET"])
 def readRoom(room_id):
@@ -51,24 +51,24 @@ def readRoom(room_id):
     except:
         return make_response('room not found', 404)
 
-"""deleting room
-Recive:
-    str: room id
-Returns:
-    json: result code
-"""
+    """deleting room
+    Recive:
+        str: room id
+    Returns:
+        json: result code
+    """
 
 @app.route('/deleteRoom/<id>', methods=['DELETE'])
 def deleteRoom(id):
     result = db.Lobby.delete_one({'_id': ObjectId(id)})
     return make_response(result, 200)
 
-"""updating room
-Recive:
-    str: room id
-Returns:
-    json: ok
-"""
+    """updating room
+    Recive:
+        str: room id
+    Returns:
+        json: ok
+    """
 
 @app.route('/updateRoom/<id>', methods=['PUT'])
 def updateRoom(id):
@@ -83,14 +83,14 @@ def updateRoom(id):
     db.Lobby.update_one(filter, settings)
     return make_response("ok", 200)
 
-"""get top autor traks
-Recive:
-    str: autor name
-    int: count traks to parse
-Returns:
-    json: traks, 200
-    error: 'No such autor', 400
-"""
+    """get top autor traks
+    Recive:
+        str: autor name
+        int: count traks to parse
+    Returns:
+        json: traks, 200
+        error: 'No such autor', 400
+    """
 
 @app.route('/getbyautor/<name>/<int:trakscount>', methods=["GET"])
 def get_byautor(name,trakscount):
@@ -114,27 +114,46 @@ def get_byautor(name,trakscount):
     else:
         return make_response('No such autor', '400')
 
-"""Spotify loggin
-Returns:
-    json: logged, 200
-"""
+    """Spotify loggin
+    Returns:
+        json: logged, 200
+    """
 
 @app.route('/loginSpotify', methods=['GET'])
 def loginSpotify():
+    sp_oauth = create_spotify_oauth()
+    auth_url = sp_oauth.get_authorize_url()
+    print(auth_url)
+    return redirect(auth_url)
+
+@app.route('/redirectSpotify', methods=['GET'])
+def redirectSpotify():
     sp_oauth = create_spotify_oauth()
     session.clear()
     code = request.args.get('code')
     token_info = sp_oauth.get_access_token(code)
     session["token_info"] = token_info
-    return make_response("logged", 200)
+    return redirect('/')
 
-"""Get users playlist
-Recive:
-    str: playlistname
-Returns:
-    sting: ok, 200
-    error: 'Unauthorized', 401
-"""
+    """logout spotify
+
+    Returns:
+        redirect: '/'
+    """
+
+@app.route('/logout')
+def logout():
+    for key in list(session.keys()):
+        session.pop(key)
+    return redirect('/')
+
+    """Get users playlist
+    Recive:
+        str: playlistname
+    Returns:
+        sting: ok, 200
+        error: 'Unauthorized', 401
+    """
 
 @app.route('/getbyplaylist/<playlistname>', methods=['GET'])
 def getbyplaylist(playlistname):
@@ -150,14 +169,15 @@ def getbyplaylist(playlistname):
     for item in results['items']:
         if str(item['name']) == playlistname:
             traks.append(sp.playlist(item['uri'])['tracks']['items'])
+    if db.Lobby.find_one({"admin":request.json['name']}):
+        db.Lobby.find_one_and_update(
+            {"_id":ObjectId(request.json['id'])},
+            {'$set': {"playlist":traks}})
+        return make_response('tracks written', '200')
+    else:
+        return make_response('forbidden ', '403')
     
-    db.Lobby.find_one_and_update(
-        {"_id":ObjectId(request.json['id'])},
-        {'$set': {"playlist":traks}})
-
-    return make_response('tracks written', '200')
     
-
 if __name__ == "__main__":
     app.run()
     
