@@ -31,8 +31,28 @@ const Room = () => {
                     </div>
 
                     <div className="center-column-room">
-                        <div className='add-playlist-btn btn'><p className="">Додати свій плейлист</p></div>
-                        <div className='choose-playlist-btn btn'><p className="">Обрати плейлист</p></div>
+                        <div className="center-column-room-buttons">
+
+                            <div className='add-playlist-btn btn'><p className="">Додати свій плейлист</p></div>
+                            <div className='choose-playlist-btn btn'><p className="">Обрати плейлист</p></div>
+
+                        </div>
+
+
+                        <div className="game-cards">
+                            <div className="card">
+                                <p className="card-song-name">Eminem</p>
+                            </div>
+                            <div className="card">
+                                <p className="card-song-name">Drake</p>
+                            </div>
+                            <div className="card">
+                                <p className="card-song-name">twenty one pilots</p>
+                            </div>
+                            <div className="card">
+                                <p className="card-song-name">blinc-182</p>
+                            </div>
+                        </div>
                     </div>
 
 
@@ -42,6 +62,16 @@ const Room = () => {
                             <div className="room-line"></div>
                             <p className="room-options-title">Кількість треків</p>
                             <div className="roop-options-quantity-tracks">
+                                <p>5</p>
+                                <p>10</p>
+                                <p>15</p>
+                            </div>
+                        </div>
+
+                        <div className="room-options">
+                            <div className="room-line"></div>
+                            <p className="room-options-title">Тривалість треків</p>
+                            <div className="roop-options-duration-tracks">
                                 <p>5</p>
                                 <p>10</p>
                                 <p>15</p>
