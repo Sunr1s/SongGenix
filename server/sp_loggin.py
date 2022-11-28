@@ -6,7 +6,7 @@ def create_spotify_oauth():
     return SpotifyOAuth(
             client_id="62cac1f286d94cf08b9cb1c29ab09f67",
             client_secret="a9718725dd8142cea7e7dbea4fdeae4d",
-            redirect_uri=url_for('loginSpotify', _external=True),
+            redirect_uri=url_for('redirectSpotify', _external=True),
             scope="playlist-read-private")
 
 def get_token():
