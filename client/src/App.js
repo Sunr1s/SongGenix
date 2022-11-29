@@ -26,17 +26,14 @@ function App() {
   }, []);
 
   return (
-    <EnterLobby>
-      
-    </EnterLobby>
-      // <Router>
-      //     <Routes>
-      //       <Route path="/" element={<EnterLobby userName={userName} setUserName={setUserName} />} />
-      //       <Route path="/connect" element={<QuestionPage socket={socket} userName={userName} setRoomData={setRoomData} />}/>
-      //       <Route path="/room" element={<Room roomData={roomData} socketData={socketData} />}/>
-      //       <Route path="*" element={<QuestionPage />}/>
-      //     </Routes>
-      // </Router>
+      <Router>
+          <Routes>
+            <Route path="/" element={<EnterNickname userName={userName} setUserName={setUserName} />} />
+            <Route path="/connect" element={<QuestionPage socket={socket} userName={userName} setRoomData={setRoomData} />}/>
+            <Route path="/room" element={<Room roomData={roomData} socketData={socketData} />}/>
+            <Route path="*" element={<QuestionPage />}/>
+          </Routes>
+      </Router>
   );
 }
 

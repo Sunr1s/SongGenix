@@ -38,21 +38,7 @@ const Room = ({ roomData, socketData }) => {
 
                         </div>
 
-<<<<<<< HEAD
                         <audio></audio>
-=======
-                        <figure>
-                            <audio 
-                                className='player'
-                                controls = "true" autoplay = "true"
-                                src="https://p.scdn.co/mp3-preview/660529eb782acfc296dc3a7810df409753b4a44c?cid=62cac1f286d94cf08b9cb1c29ab09f67.mp3" >
-                                <a href="https://p.scdn.co/mp3-preview/660529eb782acfc296dc3a7810df409753b4a44c?cid=62cac1f286d94cf08b9cb1c29ab09f67.mp3">
-                                    Download audio
-                                </a>
-                            </audio>
-                        </figure>
-
->>>>>>> a3e9c11b2c143b706f3e3e0cabee329efd078b02
                         <div className="game-cards">
                             <div className="card">
                                 <p className="card-song-name">Eminem</p>
