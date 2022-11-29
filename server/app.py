@@ -152,6 +152,27 @@ def logout():
         session.pop(key)
     return redirect('/')
 
+    """All user playlists
+
+    Returns:
+        json: playlists
+    """
+
+@app.route('/getalluserplaylists', methods=['GET'])
+def getalluserplaylists():
+    palylists = []
+    session['token_info'], authorized = get_token()
+    session.modified = True
+    if not authorized:
+        return make_response('Unauthorized', '401')
+
+    sp = spotipy.Spotify(auth=session.get('token_info').get('access_token'))
+
+    results = sp.current_user_playlists(limit=50)
+    for item in results['items']:
+        palylists.append(item['name'])
+    return make_response(json.dumps(palylists), 200)
+
     """Get users playlist
     Recive:
         str: playlistname
