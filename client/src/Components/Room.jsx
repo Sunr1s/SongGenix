@@ -15,15 +15,15 @@ const Room = ({ roomData, socketData }) => {
                         <div className="cards">
                             {
                                 roomData.users.map((user, index) => {
-                                   const userSocketData = socketData && socketData.users.find((su) => su.name === user.name);
-                                   return (
-                                       <div className='person-card'>
-                                           <p className="person-card-place">{index + 1}</p>
-                                           <p className="person-card-name">{user.name}</p>
-                                           <p className="person-card-points">{userSocketData && userSocketData.totalPoints || 0}</p>
-                                           {userSocketData && userSocketData.earnedPoints && <p className="person-card-points">(+{userSocketData.earnedPoints})</p>}
-                                       </div>
-                                   );
+                                    const userSocketData = socketData && socketData.users.find((su) => su.name === user.name);
+                                    return (
+                                        <div className='person-card'>
+                                            <p className="person-card-place">{index + 1}</p>
+                                            <p className="person-card-name">{user.name}</p>
+                                            <p className="person-card-points">{userSocketData && userSocketData.totalPoints || 0}</p>
+                                            {userSocketData && userSocketData.earnedPoints && <p className="person-card-points">(+{userSocketData.earnedPoints})</p>}
+                                        </div>
+                                    );
                                 })
                             }
                         </div>
@@ -38,7 +38,7 @@ const Room = ({ roomData, socketData }) => {
 
                         </div>
 
-
+                        <audio></audio>
                         <div className="game-cards">
                             <div className="card">
                                 <p className="card-song-name">Eminem</p>
@@ -62,9 +62,9 @@ const Room = ({ roomData, socketData }) => {
                             <div className="room-line"></div>
                             <p className="room-options-title">Кількість треків</p>
                             <div className="roop-options-quantity-tracks">
-                                <p onClick={() => setSongsNumber(5)}>5</p>
-                                <p onClick={() => setSongsNumber(10)}>10</p>
-                                <p onClick={() => setSongsNumber(15)}>15</p>
+                                <button onClick={() => setSongsNumber(5)}>5</button>
+                                <button onClick={() => setSongsNumber(10)}>10</button>
+                                <button onClick={() => setSongsNumber(15)}>15</button>
                             </div>
                         </div>
 
@@ -72,9 +72,9 @@ const Room = ({ roomData, socketData }) => {
                             <div className="room-line"></div>
                             <p className="room-options-title">Тривалість треків</p>
                             <div className="roop-options-duration-tracks">
-                                <p onClick={() => setSongsPlayingTime(5)}>5</p>
-                                <p onClick={() => setSongsPlayingTime(10)}>10</p>
-                                <p onClick={() => setSongsPlayingTime(15)}>15</p>
+                                <button onClick={() => setSongsPlayingTime(5)}>5</button>
+                                <button onClick={() => setSongsPlayingTime(10)}>10</button>
+                                <button onClick={() => setSongsPlayingTime(15)}>15</button>
                             </div>
                         </div>
                     </div>
