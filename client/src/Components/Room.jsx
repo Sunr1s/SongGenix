@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import '../App.scss';
+import PlayerLine from "./PlayerLine";
 
 const Room = ({ roomData, socketData }) => {
     const [songsNumber, setSongsNumber] = useState(5);
@@ -37,8 +38,18 @@ const Room = ({ roomData, socketData }) => {
                             <div className='choose-playlist-btn btn'><p className="">Обрати плейлист</p></div>
 
                         </div>
+                        <figure>
+                            <audio
+                                className='player'
+                                controls="true" autoplay="true"
+                                src="https://p.scdn.co/mp3-preview/660529eb782acfc296dc3a7810df409753b4a44c?cid=62cac1f286d94cf08b9cb1c29ab09f67.mp3" >
+                                <a href="https://p.scdn.co/mp3-preview/660529eb782acfc296dc3a7810df409753b4a44c?cid=62cac1f286d94cf08b9cb1c29ab09f67.mp3">
+                                    Download audio
+                                </a>
+                            </audio>
+                        </figure>
+                        <PlayerLine />
 
-                        <audio></audio>
                         <div className="game-cards">
                             <div className="card">
                                 <p className="card-song-name">Eminem</p>
