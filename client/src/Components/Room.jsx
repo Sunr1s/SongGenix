@@ -15,15 +15,15 @@ const Room = ({ roomData, socketData }) => {
                         <div className="cards">
                             {
                                 roomData.users.map((user, index) => {
-                                   const userSocketData = socketData && socketData.users.find((su) => su.name === user.name);
-                                   return (
-                                       <div className='person-card'>
-                                           <p className="person-card-place">{index + 1}</p>
-                                           <p className="person-card-name">{user.name}</p>
-                                           <p className="person-card-points">{userSocketData && userSocketData.totalPoints || 0}</p>
-                                           {userSocketData && userSocketData.earnedPoints && <p className="person-card-points">(+{userSocketData.earnedPoints})</p>}
-                                       </div>
-                                   );
+                                    const userSocketData = socketData && socketData.users.find((su) => su.name === user.name);
+                                    return (
+                                        <div className='person-card'>
+                                            <p className="person-card-place">{index + 1}</p>
+                                            <p className="person-card-name">{user.name}</p>
+                                            <p className="person-card-points">{userSocketData && userSocketData.totalPoints || 0}</p>
+                                            {userSocketData && userSocketData.earnedPoints && <p className="person-card-points">(+{userSocketData.earnedPoints})</p>}
+                                        </div>
+                                    );
                                 })
                             }
                         </div>
@@ -38,6 +38,16 @@ const Room = ({ roomData, socketData }) => {
 
                         </div>
 
+                        <figure>
+                            <audio 
+                                className='player'
+                                controls = "true" autoplay = "true"
+                                src="https://p.scdn.co/mp3-preview/660529eb782acfc296dc3a7810df409753b4a44c?cid=62cac1f286d94cf08b9cb1c29ab09f67.mp3" >
+                                <a href="https://p.scdn.co/mp3-preview/660529eb782acfc296dc3a7810df409753b4a44c?cid=62cac1f286d94cf08b9cb1c29ab09f67.mp3">
+                                    Download audio
+                                </a>
+                            </audio>
+                        </figure>
 
                         <div className="game-cards">
                             <div className="card">
