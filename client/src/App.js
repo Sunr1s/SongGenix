@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useMemo, useState} from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
@@ -25,13 +25,17 @@ function App() {
     }
   }, []);
 
+  const enterNickNameEl = useMemo(() => <EnterNickname setUserName={setUserName} />, [userName, setUserName]);
+  const questionPageEl = useMemo(() => <QuestionPage socket={socket} userName={userName} setRoomData={setRoomData} />, [userName, socket]);
+  const roomEl = useMemo(() => <Room roomData={roomData} socketData={socketData} />, [roomData, socketData]);
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<EnterNickname userName={userName} setUserName={setUserName} />} />
-        <Route path="/connect" element={<QuestionPage socket={socket} userName={userName} setRoomData={setRoomData} />} />
-        <Route path="/room" element={<Room roomData={roomData} socketData={socketData} />} />
-        <Route path="*" element={<QuestionPage />} />
+        <Route path="/" element={enterNickNameEl} />
+        { userName && <Route path="/connect" element={questionPageEl} /> }
+        { roomData && <Route path="/room" element={roomEl} /> }
+        <Route path="*" element={enterNickNameEl} />
       </Routes>
     </Router>
   );

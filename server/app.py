@@ -27,7 +27,10 @@ def createLobby():
             lobby = {
                 "admin": request.json['username'],
                 "users": [],
-                "settings": {}
+                "settings": {
+                    "songsAmount": 5,
+                    "songPlayingTime": 10
+                }
             }
             post_id = db.Lobby.insert_one(lobby).inserted_id
             lobby["_id"] = str(post_id)
@@ -82,7 +85,7 @@ def updateRoom(id):
         case 'users': 
             settings = { "$set":{ "users": request.json['users']}}
         case 'settings': 
-            settings = { "$set":{ "settings": request.json}}
+            settings = { "$set":{ "settings": request.json['settings']}}
         case _ : 
             return make_response("bad args", 500)
     db.Lobby.update_one(filter, settings)

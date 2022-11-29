@@ -63,6 +63,14 @@ body {
                 background-color: #e19bc9;
             }
         }
+        .input {
+            border-radius: 80px;
+            padding: 10px 30px;
+            width: 400px;
+            outline: none;
+            border: 0;
+            background-color: #ffff;
+        }
     }
 }
 .EnterLobby {
@@ -404,23 +412,24 @@ body {
             display: flex;
             gap: 25px;
             border-radius: 20px;
+
+            .roop-option-quantity-checked {
+                background-color: #ac89b7;
+                font-weight: 800;
+            }
         }
 
         .roop-options-quantity-tracks button {
             padding: 2px 10px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
+            transition-duration: 0.2s;
         }
 
         .roop-options-quantity-tracks button:hover {
             font-weight: 800;
             cursor: pointer;
-            transition-duration: 0.2s;
             background-color: #d4b5de;
-        }
-
-        .roop-options-quantity-tracks button:focus {
-            background-color: #ac89b7;
         }
 
         .roop-options-duration-tracks {
@@ -433,23 +442,24 @@ body {
             margin-top: 20px;
             display: flex;
             gap: 25px;
+
+            .roop-option-duration-checked {
+                background-color: #ac89b7;
+                font-weight: 800;
+            }
         }
 
         .roop-options-duration-tracks button {
             padding: 2px 10px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
+            transition-duration: 0.2s;
         }
 
         .roop-options-duration-tracks button:hover {
             font-weight: 800;
             cursor: pointer;
             background-color: #d4b5de;
-            transition-duration: 0.2s;
-        }
-
-        .roop-options-duration-tracks button:focus {
-            background-color: #ac89b7;
         }
 
     }
