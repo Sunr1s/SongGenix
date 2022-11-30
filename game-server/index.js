@@ -43,7 +43,7 @@ function _getArrayOfRandomSongs(songs) {
     const randomTrueAnswer = randomSongIndexes[arrayRandomIndex];
     return randomSongIndexes.map((randomIndex) => {
         const randomSong = songs[randomIndex];
-        randomSong.isThisSongTrueAnswer = randomIndex === randomTrueAnswer;
+        randomSong.isTrueSong = randomIndex === randomTrueAnswer;
         return randomSong;
     });
 }
@@ -52,9 +52,16 @@ const _delay = (delayInms) => {
     return new Promise(resolve => setTimeout(resolve, delayInms));
 }
 
-const game = async (roomId, userId) => {
+const _getConnectedUserIds = (roomId) => {
+    const connectedWS = [];
+    webSocketServer.clients.forEach((client) => {
+        if (client.roomId === roomId) connectedWS.push(client.userId);
+    });
+    return connectedWS;
+}
+
+const game = async (roomId) => {
     try {
-        await _delay(7500);
         const room = await Lobby.findById(roomId).lean();
         const totalRounds = room.settings.songsAmount || TOTAL_ROUNDS;
         const roundTime = room.settings.songPlayingTime || ROUND_TIME;
@@ -65,20 +72,24 @@ const game = async (roomId, userId) => {
         const [songs] = room.playlist;
 
         for (const i of roundNumbers) {
+            const connectedWSUserIds = _getConnectedUserIds(roomId);
+
+            await _delay(5000);
             const randomSongs = _getArrayOfRandomSongs(songs);
+            const startRoundRoomData = await Lobby.findById(roomId).lean();
             const roundObject = {
                 event: "startRound",
                 round: i,
                 songs: randomSongs,
                 songPlayingTime: roundTime,
-                users: room.users
+                users: startRoundRoomData.users.filter((user) => connectedWSUserIds.includes(user._id.toString()))
             };
             broadcast(roundObject, roomId);
             await _delay(roundTime * 1000);
 
             const updatedRoom = await Lobby.findById(roomId).lean();
             const playerResults = updatedRoom.users.map((user) => {
-                const oldUserResults = room.users.find((oldUser) => oldUser.name === user.name);
+                const oldUserResults = startRoundRoomData.users.find((oldUser) => oldUser.name === user.name);
                 const earnedPoints = user.totalPoints - oldUserResults.totalPoints;
                 return { ...user, earnedPoints };
             }).sort((a, b) => a.totalPoints - b.totalPoints);
@@ -87,10 +98,16 @@ const game = async (roomId, userId) => {
                 round: i,
                 songs: randomSongs,
                 songPlayingTime: roundTime,
-                users: playerResults
+                users: playerResults.filter((user) => connectedWSUserIds.includes(user._id.toString()))
             };
             broadcast(endRoundObject, roomId);
         }
+        await _delay(7500);
+        const lobby = await Lobby.findOneAndUpdate(
+            { _id: mongoose.Types.ObjectId(roomId) },
+            { $set: { "users.$[].totalPoints": 0 } },
+            { new: true },
+        );
     } catch (e) {
         console.log(e);
     }
@@ -116,21 +133,24 @@ const setClient = async (ws, userName, roomId) => {
     try {
         const room = await Lobby.findById(roomId);
         const user = await Lobby.find({ _id: roomId, "users.name": userName });
+        const connectedUserIds = _getConnectedUserIds(roomId);
 
-        if (user.length) {
-            const addedUser = room.users.find((user) => user.name === userName);
-            ws.roomId = roomId;
-            ws.userId = addedUser._id.toString();
-            ws.send(JSON.stringify(room));
-            return;
-        }
-        await room.users.push({ name: userName });
+        if (!user.length) await room.users.push({ name: userName });
         await room.save();
         const addedUser = room.users.find((user) => user.name === userName);
 
         ws.roomId = roomId;
         ws.userId = addedUser._id.toString();
-        ws.send(JSON.stringify(room));
+
+        connectedUserIds.push(addedUser._id.toString());
+
+        const roomData = {
+            admin: room.admin,
+            settings: room.settings,
+            users: room.users.filter((user) => connectedUserIds.includes(user._id.toString()))
+        }
+
+        ws.send(JSON.stringify(roomData));
     } catch (e) {
         console.log(e);
     }

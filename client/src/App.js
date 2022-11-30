@@ -12,6 +12,7 @@ import AddPlaylist from './Components/AddPlaylist';
 import NumbersModal from './Components/NumbersModal';
 
 function App() {
+
   const [userName, setUserName] = React.useState("");
   const [roomData, setRoomData] = React.useState(null);
   const [socketData, setSocketData] = React.useState(null);
@@ -28,7 +29,7 @@ function App() {
 
   const enterNickNameEl = useMemo(() => <EnterNickname setUserName={setUserName} />, [userName, setUserName]);
   const questionPageEl = useMemo(() => <QuestionPage socket={socket} userName={userName} setRoomData={setRoomData} />, [userName, socket]);
-  const roomEl = useMemo(() => <Room roomData={roomData} socketData={socketData} />, [roomData, socketData]);
+  const roomEl = useMemo(() => <Room socket={socket} roomData={roomData} socketData={socketData} />, [roomData, socketData]);
 
   return (
     // < AddPlaylist/>

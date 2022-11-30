@@ -1,11 +1,35 @@
-import React, { useState } from 'react'
+import React, {useEffect, useMemo, useState} from 'react'
 import '../App.scss';
 import PlayerLine from "./PlayerLine";
 import AddPlaylist from "./AddPlaylist";
-const Room = ({ roomData, socketData }) => {
+import {useNavigate} from "react-router-dom";
+
+const Room = ({ roomData, socketData, socket }) => {
+    const navigate = useNavigate();
     const [songsNumber, setSongsNumber] = useState(roomData.settings?.songsAmount || 5);
     const [songsPlayingTime, setSongsPlayingTime] = useState(roomData.settings?.songPlayingTime || 10);
     const [currentPlayingTime, setPlayingCurrentTime] = useState(0);
+    const [isRoundAnswered, setIsRoundAnswered] = useState(false);
+    const [answeredRound, setAnsweredRound] = useState(null);
+
+    const songToPlay = useMemo(() => {
+        if (socketData && socketData.songs)
+            return socketData.songs.find((song) => song.isTrueSong);
+        return null;
+    }, [socketData]);
+
+    useEffect(() => {
+        if (socketData && socketData.event === "startRound") {
+            setIsRoundAnswered(false);
+            setAnsweredRound(null);
+        }
+    }, [socketData]);
+
+    useEffect(() => {
+        if (!(socket && socket.readyState === socket.OPEN)) {
+            navigate("/");
+        }
+    }, [socket]);
 
 
     const [show, setShow] = useState(false)
@@ -53,6 +77,27 @@ const Room = ({ roomData, socketData }) => {
             event.target.currentTime = 0
         }
     }
+
+    const onStartGame = async () => {
+        socket.send(JSON.stringify({
+            "event": "startGame"
+        }));
+    }
+
+    const onClickAnswer = (song, round) => {
+        return async () => {
+            if (socketData.round !== answeredRound) {;
+                socket.send(JSON.stringify({
+                    event: "answer",
+                    isAnswerCorrect: song.name === songToPlay.track.name,
+                    answerTime: currentPlayingTime
+                }));
+                setIsRoundAnswered(true);
+                setAnsweredRound(round);
+            }
+        }
+    }
+
     return (
         <div>
             <div className='App'>
@@ -62,14 +107,16 @@ const Room = ({ roomData, socketData }) => {
                         <p className="title-room">Учасники</p>
                         <div className="cards">
                             {
-                                roomData.users.map((user, index) => {
-                                    const userSocketData = socketData && socketData.users.find((su) => su.name === user.name);
+                                socketData && socketData.users && socketData.users.map((user, index) => {
                                     return (
                                         <div className='person-card'>
                                             <p className="person-card-place">{index + 1}</p>
                                             <p className="person-card-name">{user.name}</p>
-                                            <p className="person-card-points">{userSocketData && userSocketData.totalPoints || 0}</p>
-                                            {userSocketData && userSocketData.earnedPoints && <p className="person-card-points">(+{userSocketData.earnedPoints})</p>}
+                                            <p className="person-card-points">{parseInt(user.totalPoints) || 0}</p>
+                                            {!!(user.earnedPoints || user.earnedPoints === 0)
+                                                ? <p className="person-card-points">(+{parseInt(user.earnedPoints)})</p>
+                                                : null
+                                            }
                                         </div>
                                     );
                                 })
@@ -90,32 +137,33 @@ const Room = ({ roomData, socketData }) => {
                             <audio
                                 className='player'
                                 controls="true"
-                                autoplay="true"
-                                src="https://p.scdn.co/mp3-preview/ca11ade2481e30125511e5debba069379c1d40d6?cid=774b29d4f13844c495f206cafdad9c86.mp3"
+                                autoPlay="true"
+                                src={songToPlay ? songToPlay.track.preview_url : ""}
                                 onTimeUpdate={(event) => onTimeUpdate(event)}
-                            >
-                                <a href="https://p.scdn.co/mp3-preview/ca11ade2481e30125511e5debba069379c1d40d6?cid=774b29d4f13844c495f206cafdad9c86.mp3">
-                                    Download audio
-                                </a>
-                            </audio>
+                            />
                         </figure>
                         <PlayerLine currentTime={currentPlayingTime} songsPlayingTime={songsPlayingTime} />
 
                         <div className="game-cards">
-                            <div className="card">
-                                <p className="card-song-name">Eminem</p>
-                            </div>
-                            <div className="card">
-                                <p className="card-song-name">Drake</p>
-                            </div>
-                            <div className="card">
-                                <p className="card-song-name">twenty one pilots</p>
-                            </div>
-                            <div className="card">
-                                <p className="card-song-name">blinc-182</p>
-                            </div>
+                            {socketData && socketData.songs && socketData.songs.map((data) => {
+                                let cardClassName = "card";
+                                if (isRoundAnswered)
+                                    cardClassName = data && songToPlay && data.track.name === songToPlay.track.name
+                                        ? "card card-true" : "card card-false";
+                                else cardClassName = "card";
+                                return (
+                                    <div
+                                        className={cardClassName}
+                                        onClick={onClickAnswer(data.track, socketData.round)}
+                                    >
+                                        <p className="card-song-name">{data.track.name}</p>
+                                    </div>
+                                );
+                            })}
                         </div>
-                        <p className='central-rounds'>2/15</p>
+                        {socketData && socketData.round
+                            ? <p className='central-rounds'>{socketData.round}/{songsNumber}</p>
+                            : <p className='central-rounds'>---/---</p>}
                     </div>
 
 
@@ -141,7 +189,7 @@ const Room = ({ roomData, socketData }) => {
                             </div>
                             <div className="right-btns">
                                 <button className='spotify-btn'>SPOTIFY</button>
-                                <button className='start-btn'>Розпочати</button>
+                                <button className='start-btn' onClick={onStartGame}>Розпочати</button>
                             </div>
 
 
