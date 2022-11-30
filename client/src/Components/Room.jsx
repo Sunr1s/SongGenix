@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import '../App.scss';
 import PlayerLine from "./PlayerLine";
-
 const Room = ({ roomData, socketData }) => {
     const [songsNumber, setSongsNumber] = useState(roomData.settings?.songsAmount || 5);
     const [songsPlayingTime, setSongsPlayingTime] = useState(roomData.settings?.songPlayingTime || 10);
@@ -135,6 +134,7 @@ const Room = ({ roomData, socketData }) => {
                                 <button onClick={onChangeSongsPlayingTime(10)} className={songsPlayingTime === 10 ? 'roop-option-duration-checked' : ''}>10</button>
                                 <button onClick={onChangeSongsPlayingTime(15)} className={songsPlayingTime === 15 ? 'roop-option-duration-checked' : ''}>15</button>
                             </div>
+                            <button className='spotify-btn'>SPOTIFY</button>
                         </div>
                     </div>
                 </div>

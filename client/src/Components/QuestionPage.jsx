@@ -67,8 +67,8 @@ const QuestionPage = ({ socket, userName, setRoomData }) => {
                         { !isConnect
                             ? <div className='create-room-btn btn' onClick={onCreateRoom}>Створити кімнату</div>
                             : <input
-                                placeholder="Введіть id кімнати"
-                                className="input"
+                                placeholder="ID кімнати"
+                                className="input-id"
                                 value={roomId}
                                 onChange={(e) => setRoomId(e.target.value)}
                               />

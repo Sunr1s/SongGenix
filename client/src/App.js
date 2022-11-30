@@ -8,7 +8,7 @@ import {
 import EnterNickname from './Components/EnterNickname';
 import QuestionPage from "./Components/QuestionPage";
 import Room from "./Components/Room";
-import EnterLobby from './Components/EnterLobby';
+import AddPlaylist from './Components/AddPlaylist';
 
 function App() {
   const [userName, setUserName] = React.useState("");
@@ -30,6 +30,8 @@ function App() {
   const roomEl = useMemo(() => <Room roomData={roomData} socketData={socketData} />, [roomData, socketData]);
 
   return (
+
+    // <AddPlaylist/>
     <Router>
       <Routes>
         <Route path="/" element={enterNickNameEl} />

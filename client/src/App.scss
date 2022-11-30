@@ -7,8 +7,24 @@ body {
 }
 
 .App {
-
     .question {
+        .input-id::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #000000;
+            opacity: 1; /* Firefox */
+          }
+        .input-id{
+            color: #000000;
+            opacity: 1;
+            padding: 1rem;
+            font-size: 16px;
+            min-width: 480px;
+            min-height: 45px;
+            border-radius: 35px;
+            margin-bottom: 50px;
+            background: transparent;
+            border: 1px solid;
+            font-family: 'neue';
+        }
         position: relative;
         top: 150px;
         display: flex;
@@ -73,13 +89,21 @@ body {
         }
     }
 }
-.EnterLobby {
-    position: relative;
-    top: 150px;
+.AddPlaylist {
     display: flex;
-    justify-content: center;
+    background-color: rgba(253, 250, 250, 0.4);
+    border-radius: 20px;
+    margin: 50px auto;
+    width: 90vw;
+    height: 90vh;
 
-    .lobby-white-oval {
+    .data-playlist{
+        display: flex;
+        margin: 150px auto;
+        align-items: flex-start;
+        max-width: 800px;
+    }
+    .playlist-white-oval {
         font-weight: 500;
         font-family: 'neue';
         text-align: center;
@@ -90,16 +114,14 @@ body {
         padding: 25px 60px;
 
 
-        .lobby-white-oval-text {
+        .playlist-white-oval-text {
             opacity: 0.99;
-            position: relative;
-            left: -220px;
             font-size: 55px;
             margin-top: 15px;
             margin-bottom: 30px;
         }
 
-        .lobby-white-oval-input {
+        .playlist-white-oval-input {
             opacity: 1;
             padding: 0 1rem;
             font-size: 30px;
@@ -112,7 +134,7 @@ body {
             border: 1px solid;
         }
 
-        .lobby-white-oval-btn {
+        .playlist-white-oval-btn {
             opacity: 1;
             border-radius: 65px;
             margin: 0 auto;
@@ -130,7 +152,7 @@ body {
             animation: gradient 10s;
         }
 
-        .lobby-white-oval-btn:hover {
+        .playlist-white-oval-btn:hover {
             cursor: pointer;
             background-image: linear-gradient(60deg, #ac89b7, #bc9ac2);
 
@@ -204,14 +226,15 @@ body {
             background-image: linear-gradient(60deg, #ac89b7, #bc9ac2);
 
         }
+        .nickname-white-oval-btn:hover {
+            cursor: pointer;
+            background-image: linear-gradient(60deg, #ac89b7, #bc9ac2);
+        
+        }
     }
 }
 
-.nickname-white-oval-btn:hover {
-    cursor: pointer;
-    background-image: linear-gradient(60deg, #ac89b7, #bc9ac2);
 
-}
 
 
 /*===============================
@@ -222,6 +245,24 @@ body {
     display: flex;
     justify-content: space-between;
 
+    .spotify-btn{
+        padding: 4px 16px;
+        font-weight: 400;
+        border-radius: 10px;
+        display: flex;
+        margin-top: 400px;
+        justify-content: center;
+        max-width: 150px;
+        background-color: RGB(24, 210, 96);
+        font-family: 'neue';
+        border: 1px solid #000000;
+    }
+    .spotify-btn:hover{
+        background-color: RGB(24, 240, 96);
+        cursor: pointer;
+        font-family: 'neue';
+        font-weight: 700;
+    }
     .title-room {
         margin-top: 50px;
         display: flex;
@@ -288,47 +329,6 @@ body {
         .player{
             visibility: hidden;
         }
-
-        .player-menu{
-
-              
-              /* The element to apply the animation to */
-              .player-ball{
-                z-index: 4;
-                position: relative;
-                left: 8px;
-                top: 209px;
-                width: 15px;
-                height: 15px;
-                border-radius: 80px;
-                background-color: #b800fb;
-                animation-name: slide;
-                animation-duration: 4s;
-                transition: left 7s cubic-bezier(0, 0, 1, 1);
-            }
-
-              @keyframes example {
-                0%   {left:0px; top:0px;}
-                25%  {left:200px; top:0px;}
-                50%  {left:400px; top:200px;}
-                75%  {left:600px; top:200px;}
-                100% {left:800px; top:0px;}
-              }
-
-            .player-line{
-                position: relative;
-                top: 200px;
-                display: flex;
-                margin: 0 auto;
-                width: 600px;
-                height: 2px;
-                background-color: #000000;
-            }
-        }
-
-
-
-
 
         .add-playlist-btn {
             background-image: linear-gradient(60deg, #A372D48A, #9159A436);
