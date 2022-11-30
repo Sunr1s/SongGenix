@@ -134,7 +134,12 @@ const Room = ({ roomData, socketData }) => {
                                 <button onClick={onChangeSongsPlayingTime(10)} className={songsPlayingTime === 10 ? 'roop-option-duration-checked' : ''}>10</button>
                                 <button onClick={onChangeSongsPlayingTime(15)} className={songsPlayingTime === 15 ? 'roop-option-duration-checked' : ''}>15</button>
                             </div>
-                            <button className='spotify-btn'>SPOTIFY</button>
+                            <div className="right-btns">
+                                <button className='spotify-btn'>SPOTIFY</button>
+                                <button className='start-btn'>Розпочати</button>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
