@@ -115,6 +115,7 @@ const Room = ({ roomData, socketData }) => {
                                 <p className="card-song-name">blinc-182</p>
                             </div>
                         </div>
+                        <p className='central-rounds'>2/15</p>
                     </div>
 
 
