@@ -145,12 +145,18 @@ body {
     }
 
         .AddPlaylist {
+            z-index: 235;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
             display: flex;
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: RGB(223, 199, 207);
             border-radius: 20px;
             margin: 50px auto;
-            width: 90vw;
-            height: 90vh;
+            width: 50vw;
+            height: 80vh;
 
             .data-playlist {
                 display: flex;
@@ -163,10 +169,10 @@ body {
                 font-weight: 500;
                 font-family: 'neue';
                 text-align: center;
-                min-width: 850px;
+                width: 40vw;
                 min-height: 350px;
                 border-radius: 80px;
-                background-color: rgba(253, 250, 250, 0.6);
+                background-color: rgba(253, 250, 250, 0.7);
                 padding: 25px 60px;
 
 
@@ -181,7 +187,7 @@ body {
                     opacity: 1;
                     padding: 0 1rem;
                     font-size: 30px;
-                    min-width: 680px;
+                    width: 30vw;
                     min-height: 66px;
                     width: max-content;
                     border-radius: 35px;
@@ -205,7 +211,6 @@ body {
                     max-width: 280px;
                     max-height: 60px;
                     font-weight: 700;
-                    animation: gradient 10s;
                 }
 
                 .playlist-white-oval-btn:hover {
@@ -302,18 +307,7 @@ body {
             display: flex;
             justify-content: space-between;
 
-            .spotify-btn {
-                padding: 4px 16px;
-                font-weight: 400;
-                border-radius: 10px;
-                display: flex;
-                margin-top: 400px;
-                justify-content: center;
-                max-width: 150px;
-                background-color: RGB(24, 210, 96);
-                font-family: 'neue';
-                border: 1px solid #000000;
-            }
+           
 
             .spotify-btn:hover {
                 background-color: RGB(24, 240, 96);
@@ -371,16 +365,6 @@ body {
                     display: flex;
                 }
 
-                .btn {
-                    margin-top: 50px;
-                    margin-left: 20px;
-                    border-radius: 50px;
-                    height: fit-content;
-                    padding: 10px 30px;
-                    font-family: 'neue';
-                    font-size: 25px;
-                }
-
                 .btn:hover {
                     cursor: pointer;
                 }
@@ -390,18 +374,34 @@ body {
                 }
 
                 .add-playlist-btn {
+                    margin-top: 50px;
+                    margin-left: 20px;
+                    border-radius: 50px;
+                    height: fit-content;
+                    padding: 10px 30px;
+                    font-family: 'neue';
+                    font-size: 25px;
                     background-image: linear-gradient(60deg, #A372D48A, #9159A436);
                 }
 
                 .choose-playlist-btn {
+                    margin-top: 50px;
+                    margin-left: 20px;
+                    border-radius: 50px;
+                    height: fit-content;
+                    padding: 10px 30px;
+                    font-family: 'neue';
+                    font-size: 25px;
                     background-image: linear-gradient(60deg, #df8bae, #f98fbb, );
                 }
 
                 .add-playlist-btn:hover {
+                    cursor: pointer;
                     background-image: linear-gradient(60deg, #b989e98a, #ab72bd36);
                 }
 
                 .choose-playlist-btn:hover {
+                    cursor: pointer;
                     background-image: linear-gradient(60deg, #f3a1c3, #fe7cb2, );
                 }
 
@@ -410,7 +410,6 @@ body {
 
                 .game-cards {
                     grid-template-rows: 120px 120px 120px 120px;
-                    margin-top: 200px;
                     display: grid;
 
                     text-align: center;
@@ -522,17 +521,27 @@ body {
                 }
 
                 .right-btns {
+                    margin-top: 150px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                 }
-
+                .spotify-btn {
+                    padding: 4px 16px;
+                    font-weight: 400;
+                    border-radius: 10px;
+                    display: flex;
+                    justify-content: center;
+                    max-width: 150px;
+                    background-color: RGB(24, 210, 96);
+                    font-family: 'neue';
+                    border: 1px solid #000000;
+                }
                 .start-btn {
                     font-family: 'neue';
                     background-color: #ac89b7;
                     border: 1px solid #000000;
                     margin-left: 50px;
-                    margin-top: 400px;
                     padding: 6px 12px;
                     max-height: 40px;
                     border-radius: 15px;

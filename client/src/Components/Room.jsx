@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import '../App.scss';
 import PlayerLine from "./PlayerLine";
+import AddPlaylist from "./AddPlaylist";
 const Room = ({ roomData, socketData }) => {
     const [songsNumber, setSongsNumber] = useState(roomData.settings?.songsAmount || 5);
     const [songsPlayingTime, setSongsPlayingTime] = useState(roomData.settings?.songPlayingTime || 10);
     const [currentPlayingTime, setPlayingCurrentTime] = useState(0);
+
+
+    const [show, setShow] = useState(false)
 
     const changeSettingData = async (settings) => {
         const response = await fetch(`http://127.0.0.1:5000/updateRoom/${roomData._id}`, {
@@ -49,7 +53,6 @@ const Room = ({ roomData, socketData }) => {
             event.target.currentTime = 0
         }
     }
-
     return (
         <div>
             <div className='App'>
@@ -78,8 +81,9 @@ const Room = ({ roomData, socketData }) => {
                     <div className="center-column-room">
                         <div className="center-column-room-buttons">
 
-                            <div className='add-playlist-btn btn'><p className="">Додати свій плейлист</p></div>
-                            <div className='choose-playlist-btn btn'><p className="">Обрати плейлист</p></div>
+                            <div onClick={() => setShow(true)} className='add-playlist-btn'><p className="">Додати свій плейлист</p></div>
+                            <AddPlaylist onClose={() => setShow(false)} show = {show}/>
+                            <div className='choose-playlist-btn'><p className="">Обрати плейлист</p></div>
 
                         </div>
                         <figure>
@@ -87,10 +91,10 @@ const Room = ({ roomData, socketData }) => {
                                 className='player'
                                 controls="true"
                                 autoplay="true"
-                                src="https://p.scdn.co/mp3-preview/660529eb782acfc296dc3a7810df409753b4a44c?cid=62cac1f286d94cf08b9cb1c29ab09f67.mp3"
+                                src="https://p.scdn.co/mp3-preview/ca11ade2481e30125511e5debba069379c1d40d6?cid=774b29d4f13844c495f206cafdad9c86.mp3"
                                 onTimeUpdate={(event) => onTimeUpdate(event)}
                             >
-                                <a href="https://p.scdn.co/mp3-preview/660529eb782acfc296dc3a7810df409753b4a44c?cid=62cac1f286d94cf08b9cb1c29ab09f67.mp3">
+                                <a href="https://p.scdn.co/mp3-preview/ca11ade2481e30125511e5debba069379c1d40d6?cid=774b29d4f13844c495f206cafdad9c86.mp3">
                                     Download audio
                                 </a>
                             </audio>
