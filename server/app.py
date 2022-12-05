@@ -6,7 +6,6 @@ from flask import Flask, make_response, request, session, redirect
 from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
 from sp_loggin import get_token, create_spotify_oauth
 from flask_cors import CORS
-import json
 
 app = Flask(__name__)
 CORS(app)
@@ -133,7 +132,7 @@ def loginSpotify():
     sp_oauth = create_spotify_oauth()
     auth_url = sp_oauth.get_authorize_url()
     print(auth_url)
-    return auth_url
+    return redirect(auth_url)
 
 @app.route('/redirectSpotify', methods=['GET'])
 def redirectSpotify():
@@ -184,18 +183,6 @@ def getalluserplaylists():
         sting: ok, 200
         error: 'Unauthorized', 401
     """
-
-@app.route('/tracks/<room_id>', methods=['GET'])
-def insert_tracks(room_id):
-    print(room_id)
-    f = open('mock.json')
-    data = json.load(f)
-    tracks = data['playlist']
-    db.Lobby.find_one_and_update(
-        {"_id":ObjectId(room_id)},
-        {'$set': {"playlist": tracks }}
-    )
-    return make_response('tracks written', '200')
 
 @app.route('/getbyplaylist/<playlistname>', methods=['GET'])
 def getbyplaylist(playlistname):
