@@ -108,6 +108,14 @@ const game = async (roomId) => {
             { $set: { "users.$[].totalPoints": 0 } },
             { new: true },
         );
+        const connectedUserIds = _getConnectedUserIds(roomId);
+        const endGameObject = {
+            event: 'endGame',
+            admin: lobby.admin,
+            settings: lobby.settings,
+            users: lobby.users.filter((user) => connectedUserIds.includes(user._id.toString()))
+        }
+        broadcast(endGameObject, roomId);
     } catch (e) {
         console.log(e);
     }

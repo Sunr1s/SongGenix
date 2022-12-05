@@ -29,7 +29,7 @@ function App() {
 
   const enterNickNameEl = useMemo(() => <EnterNickname setUserName={setUserName} />, [userName, setUserName]);
   const questionPageEl = useMemo(() => <QuestionPage socket={socket} userName={userName} setRoomData={setRoomData} />, [userName, socket]);
-  const roomEl = useMemo(() => <Room socket={socket} roomData={roomData} socketData={socketData} />, [roomData, socketData]);
+  const roomEl = useMemo(() => <Room socket={socket} userName={userName} roomData={roomData} socketData={socketData} />, [roomData, socketData]);
 
   return (
     // < AddPlaylist/>

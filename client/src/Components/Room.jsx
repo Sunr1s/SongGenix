@@ -4,7 +4,7 @@ import PlayerLine from "./PlayerLine";
 import AddPlaylist from "./AddPlaylist";
 import {useNavigate} from "react-router-dom";
 
-const Room = ({ roomData, socketData, socket }) => {
+const Room = ({ roomData, socketData, socket, userName }) => {
     const navigate = useNavigate();
     const [songsNumber, setSongsNumber] = useState(roomData.settings?.songsAmount || 5);
     const [songsPlayingTime, setSongsPlayingTime] = useState(roomData.settings?.songPlayingTime || 10);
@@ -12,11 +12,14 @@ const Room = ({ roomData, socketData, socket }) => {
     const [isRoundAnswered, setIsRoundAnswered] = useState(false);
     const [answeredRound, setAnsweredRound] = useState(null);
 
+    const isUserNameAdmin = roomData.admin === userName;
+
     const songToPlay = useMemo(() => {
         if (socketData && socketData.songs)
             return socketData.songs.find((song) => song.isTrueSong);
         return null;
     }, [socketData]);
+    console.log(songToPlay);
 
     useEffect(() => {
         if (socketData && socketData.event === "startRound") {
@@ -128,9 +131,13 @@ const Room = ({ roomData, socketData, socket }) => {
                     <div className="center-column-room">
                         <div className="center-column-room-buttons">
 
-                            <div onClick={() => setShow(true)} className='add-playlist-btn'><p className="">Додати свій плейлист</p></div>
-                            <AddPlaylist onClose={() => setShow(false)} show = {show}/>
-                            <div className='choose-playlist-btn'><p className="">Обрати плейлист</p></div>
+                            {isUserNameAdmin ?
+                                (<>
+                                    <div onClick={() => setShow(true)} className='add-playlist-btn'><p className="">Додати свій плейлист</p></div>
+                                    <AddPlaylist onClose={() => setShow(false)} show = {show}/>
+                                    <div className='choose-playlist-btn'><p className="">Обрати плейлист</p></div>
+                                </>) : null
+                            }
 
                         </div>
                         <figure>
@@ -138,6 +145,7 @@ const Room = ({ roomData, socketData, socket }) => {
                                 className='player'
                                 controls="true"
                                 autoPlay="true"
+                                volume={"0.5"}
                                 src={songToPlay ? songToPlay.track.preview_url : ""}
                                 onTimeUpdate={(event) => onTimeUpdate(event)}
                             />
@@ -167,34 +175,35 @@ const Room = ({ roomData, socketData, socket }) => {
                     </div>
 
 
-                    <div className="right-column-room column-room">
-                        <p className="title-room">Налаштування</p>
-                        <div className="room-options">
-                            <div className="room-line"></div>
-                            <p className="room-options-title">Кількість треків</p>
-                            <div className="roop-options-quantity-tracks">
-                                <button onClick={onChangeSongsNumber(5)} className={songsNumber === 5 ? 'roop-option-quantity-checked' : ''}>5</button>
-                                <button onClick={onChangeSongsNumber(10)} className={songsNumber === 10 ? 'roop-option-quantity-checked' : ''}>10</button>
-                                <button onClick={onChangeSongsNumber(15)} className={songsNumber === 15 ? 'roop-option-quantity-checked' : ''}>15</button>
-                            </div>
-                        </div>
-
-                        <div className="room-options">
-                            <div className="room-line"></div>
-                            <p className="room-options-title">Тривалість треків</p>
-                            <div className="roop-options-duration-tracks">
-                                <button onClick={onChangeSongsPlayingTime(5)} className={songsPlayingTime === 5 ? 'roop-option-duration-checked' : ''}>5</button>
-                                <button onClick={onChangeSongsPlayingTime(10)} className={songsPlayingTime === 10 ? 'roop-option-duration-checked' : ''}>10</button>
-                                <button onClick={onChangeSongsPlayingTime(15)} className={songsPlayingTime === 15 ? 'roop-option-duration-checked' : ''}>15</button>
-                            </div>
-                            <div className="right-btns">
-                                <button className='spotify-btn'>SPOTIFY</button>
-                                <button className='start-btn' onClick={onStartGame}>Розпочати</button>
+                    {isUserNameAdmin ?
+                        (<div className="right-column-room column-room">
+                            <p className="title-room">Налаштування</p>
+                            <div className="room-options">
+                                <div className="room-line"></div>
+                                <p className="room-options-title">Кількість треків</p>
+                                <div className="roop-options-quantity-tracks">
+                                    <button onClick={onChangeSongsNumber(5)} className={songsNumber === 5 ? 'roop-option-quantity-checked' : ''}>5</button>
+                                    <button onClick={onChangeSongsNumber(10)} className={songsNumber === 10 ? 'roop-option-quantity-checked' : ''}>10</button>
+                                    <button onClick={onChangeSongsNumber(15)} className={songsNumber === 15 ? 'roop-option-quantity-checked' : ''}>15</button>
+                                </div>
                             </div>
 
+                            <div className="room-options">
+                                <div className="room-line"></div>
+                                <p className="room-options-title">Тривалість треків</p>
+                                <div className="roop-options-duration-tracks">
+                                    <button onClick={onChangeSongsPlayingTime(5)} className={songsPlayingTime === 5 ? 'roop-option-duration-checked' : ''}>5</button>
+                                    <button onClick={onChangeSongsPlayingTime(10)} className={songsPlayingTime === 10 ? 'roop-option-duration-checked' : ''}>10</button>
+                                    <button onClick={onChangeSongsPlayingTime(15)} className={songsPlayingTime === 15 ? 'roop-option-duration-checked' : ''}>15</button>
+                                </div>
+                                <div className="right-btns">
+                                    <button className='spotify-btn'>SPOTIFY</button>
+                                    <button className='start-btn' onClick={onStartGame}>Розпочати</button>
+                                </div>
 
-                        </div>
-                    </div>
+
+                            </div>
+                        </div>) : null}
                 </div>
 
             </div>
