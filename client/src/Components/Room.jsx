@@ -101,6 +101,33 @@ const Room = ({ roomData, socketData, socket, userName }) => {
         }
     }
 
+    const onAddTracks = async () => {
+        const response = await fetch(`http://127.0.0.1:5000/tracks/${roomData._id}`, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive"
+            }
+        });
+        setShow(false);
+    }
+
+    const onLogin = async () => {
+        const response = await fetch(`http://127.0.0.1:5000/loginSpotify`, {
+            method: 'GET',
+            mode: 'no-cors',
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "*/*",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive"
+            }
+        });
+
+    }
     return (
         <div>
             <div className='App'>
@@ -134,7 +161,7 @@ const Room = ({ roomData, socketData, socket, userName }) => {
                             {isUserNameAdmin ?
                                 (<>
                                     <div onClick={() => setShow(true)} className='add-playlist-btn'><p className="">Додати свій плейлист</p></div>
-                                    <AddPlaylist onClose={() => setShow(false)} show = {show}/>
+                                    <AddPlaylist onClose={onAddTracks} show = {show}/>
                                     <div className='choose-playlist-btn'><p className="">Обрати плейлист</p></div>
                                 </>) : null
                             }
@@ -197,9 +224,10 @@ const Room = ({ roomData, socketData, socket, userName }) => {
                                     <button onClick={onChangeSongsPlayingTime(15)} className={songsPlayingTime === 15 ? 'roop-option-duration-checked' : ''}>15</button>
                                 </div>
                                 <div className="right-btns">
-                                    <button className='spotify-btn'>SPOTIFY</button>
+                                    <button className='spotify-btn' onClick={onLogin}>SPOTIFY</button>
                                     <button className='start-btn' onClick={onStartGame}>Розпочати</button>
                                 </div>
+                                <p>{"ID кімнати: " + roomData._id}</p>
 
 
                             </div>

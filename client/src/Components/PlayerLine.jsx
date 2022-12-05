@@ -8,8 +8,8 @@ export default function LinearDeterminate({ songsPlayingTime, currentTime }) {
       width: '100%'
     }}>
       <LinearProgress color="secondary" variant="determinate" value={currentProgress} sx={{
-        marginTop: '100px',
-        marginBottom:'100px',
+        marginTop: '40px',
+        marginBottom:'40px',
         width: '640px',
         height: '20px',
         borderRadius: '20px',

@@ -62,6 +62,7 @@ const _getConnectedUserIds = (roomId) => {
 
 const game = async (roomId) => {
     try {
+        console.log(roomId);
         const room = await Lobby.findById(roomId).lean();
         const totalRounds = room.settings.songsAmount || TOTAL_ROUNDS;
         const roundTime = room.settings.songPlayingTime || ROUND_TIME;

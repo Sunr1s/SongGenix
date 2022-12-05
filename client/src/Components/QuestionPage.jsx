@@ -24,7 +24,7 @@ const QuestionPage = ({ socket, userName, setRoomData }) => {
             const room = await response.json();
             setRoomData(room);
             socket.send(JSON.stringify({
-                roomId,
+                roomId: room._id,
                 name: userName,
                 event: "setClient"
             }));
