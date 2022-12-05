@@ -133,7 +133,7 @@ def loginSpotify():
     sp_oauth = create_spotify_oauth()
     auth_url = sp_oauth.get_authorize_url()
     print(auth_url)
-    return redirect(auth_url)
+    return auth_url
 
 @app.route('/redirectSpotify', methods=['GET'])
 def redirectSpotify():
